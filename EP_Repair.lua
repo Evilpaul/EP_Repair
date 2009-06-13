@@ -1,25 +1,11 @@
-local EPRepair = CreateFrame("Frame") -- create our frame
-EPRepair:RegisterEvent("MERCHANT_SHOW") -- we care about this event, so register
+local EPRepair = CreateFrame("Frame")
+EPRepair:RegisterEvent("MERCHANT_SHOW")
 
--- routine to output some string preceded by the formatted addon name
 function EPRepair:MessageOutput(inputMessage)
 	ChatFrame1:AddMessage(string.format("|cffDAFF8A[Repair]|r %s", inputMessage))
-end;
-
--- convert raw money amount into gold, silver and copper amount and output to screen
-function EPRepair:PrintMoney(money)
-	money = math.floor(money)
-	local copper = money % 100
-	money = math.floor(money / 100)
-	local silver = money % 100
-	money = math.floor(money / 100)
-	local gold = money
-
-	self:MessageOutput(string.format("Repaired for %d|cffd3c63ag|r %d|cffb0b0b0s|r %d|cffb2734ac|r", gold, silver, copper))
 end
 
--- general check on viability of repair
-function EPRepair:MERCHANT_SHOW(self, event, ...)
+function EPRepair:RepairMe()
 
 	-- only continue if we talk to a repair guy
 	if not CanMerchantRepair() then return end
@@ -39,16 +25,25 @@ function EPRepair:MERCHANT_SHOW(self, event, ...)
 		-- repair, at last
 		RepairAllItems()
 
+		-- format the output string depending upon user selected Colour Blind Mode
+		local moneyString
+		if (GetCVar("colorblindMode") == "0") then
+			moneyString = GetCoinTextureString(rawAmount)
+		else
+			moneyString = GetCoinText(rawAmount)
+		end
+
 		-- tell me the wipe cost
-		self:PrintMoney(rawAmount)
+		self:MessageOutput(string.format("Repaired for %s", moneyString))
+
 	else
 		-- someone haxxored my goldz?
 		self:MessageOutput("Cannot afford to repair!")
-	end;
+	end
 
-end;
+end
 
 -- handle the "MERCHANT_SHOW" event
 EPRepair:SetScript("OnEvent", function(self, event, ...)
-	self[event](self, event, ...)
+	self:RepairMe()
 end)
