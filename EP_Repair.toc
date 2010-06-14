@@ -3,9 +3,5 @@
 ## Notes: Automatically repair gear
 ## Author: EvilPaul
 ## Version: 1.1
-## DefaultState: enabled
-## X-website: http://github.com/Evilpaul
-## X-Localizations: enUS
-## X-Category: Inventory
 
 EP_Repair.lua
