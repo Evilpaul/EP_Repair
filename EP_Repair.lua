@@ -3,11 +3,7 @@ local format = string.format
 local EPRepair = CreateFrame('Frame')
 EPRepair:RegisterEvent('MERCHANT_SHOW')
 
-function EPRepair:MessageOutput(inputMessage)
-	ChatFrame1:AddMessage(format('|cffDAFF8A[Repair]|r %s', inputMessage))
-end
-
-function EPRepair:MERCHANT_SHOW(event)
+EPRepair:SetScript('OnEvent', function(self, event, ...)
 	-- only continue if we talk to a repair guy
 	if not CanMerchantRepair() then return end
 
@@ -22,7 +18,6 @@ function EPRepair:MERCHANT_SHOW(event)
 
 	-- repair if we have enough gold
 	if (gold > rawAmount) then
-
 		-- format the output string depending upon user selected Colour Blind Mode
 		local moneyString
 		if (GetCVar('colorblindMode') == '0') then
@@ -32,18 +27,12 @@ function EPRepair:MERCHANT_SHOW(event)
 		end
 
 		-- tell me the wipe cost
-		self:MessageOutput(format('Repairing for %s', moneyString))
+		DEFAULT_CHAT_FRAME:AddMessage(format('|cffDAFF8A[Repair]|r Repairing for %s', moneyString))
 
 		-- repair, at last
 		RepairAllItems()
-
 	else
 		-- someone haxxored my goldz?
-		self:MessageOutput('Cannot afford to repair!')
+		DEFAULT_CHAT_FRAME:AddMessage('|cffDAFF8A[Repair]|r Cannot afford to repair!')
 	end
-
-end
-
-EPRepair:SetScript('OnEvent', function(self, event, ...)
-	self[event](self, event, ...)
 end)
