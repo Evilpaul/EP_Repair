@@ -3,5 +3,7 @@
 ## Notes: Automatically repair gear
 ## Author: EvilPaul
 ## Version: 1.1
+## LoadManagers: AddonLoader
+## X-LoadOn-Always: delayed
 
 EP_Repair.lua
