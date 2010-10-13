@@ -18,13 +18,7 @@ EPRepair:SetScript('OnEvent', function(self, event, ...)
 
 	-- repair if we have enough gold
 	if (gold > rawAmount) then
-		-- format the output string depending upon user selected Colour Blind Mode
-		local moneyString
-		if (GetCVar('colorblindMode') == '0') then
-			moneyString = GetCoinTextureString(rawAmount)
-		else
-			moneyString = GetCoinText(rawAmount)
-		end
+		local moneyString = GetMoneyString(rawAmount)
 
 		-- tell me the wipe cost
 		DEFAULT_CHAT_FRAME:AddMessage(format('|cffDAFF8A[Repair]|r Repairing for %s', moneyString))
