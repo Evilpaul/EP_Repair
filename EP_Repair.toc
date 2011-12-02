@@ -1,4 +1,4 @@
-## Interface: 40000
+## Interface: 43000
 ## Title: EP |cffDAFF8A[Repair]|r
 ## Notes: Automatically repair gear
 ## Author: EvilPaul
